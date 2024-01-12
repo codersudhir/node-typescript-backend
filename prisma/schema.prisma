@@ -1,0 +1,680 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserType {
+  admin
+  normal
+}
+
+enum UserGender {
+  male
+  female
+  other
+}
+
+model User {
+  id              Int                @id @default(autoincrement())
+  createdAt       DateTime           @default(now())
+  email           String             @unique
+  password        String
+  firstName       String
+  lastName        String?
+  fatherName      String?
+  phone           String?
+  gender          UserGender
+  address         String?
+  pin             String?
+  aadhaar         String?
+  pan             String?
+  dob             DateTime?
+  verified        Boolean            @default(false)
+  userType        UserType           @default(normal)
+  otps            Otp[]
+  businessProfile BusinessProfile?
+  invoices        Invoice[]
+  categories      Category[]
+  items           Item[]
+  parties         Party[]
+  payments        Payment[]
+  orders          Order[]
+  posts           Post[]
+  accounts        Account[]
+  bankAccounts    BankDetails[]
+  loans           LoanApplication[]
+  documents       UploadedDocument[]
+  insurances      Insurance[]
+  registerStartup RegisterStartup[]
+  contactUs       ContactUs[]
+  journalEntries  JournalEntry[]
+  legders         Ledger[]
+  transactions    Transaction[]
+  agentId         Agent?
+  clientAccounts  Client[]
+}
+
+model Otp {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  otp       String
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  used      Boolean  @default(false)
+}
+
+model BusinessProfile {
+  id                      Int      @id @default(autoincrement())
+  businessName            String
+  pan                     String?
+  tan                     String?
+  gstin                   String?
+  address                 String?
+  bankName                String?
+  bankAccountNo           String?
+  bankIfsc                String?
+  bankBranch              String?
+  state                   String?
+  userId                  Int      @unique
+  user                    User     @relation(fields: [userId], references: [id])
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @default(now())
+  isAddressVerified       Boolean?
+  isBusinessNameVerified  Boolean?
+  isGstinVerified         Boolean?
+  isPanVerified           Boolean?
+  isStateVerified         Boolean?
+}
+
+enum LedgerType {
+  bank
+  cash
+  purchase
+  sales
+  directExpense
+  indirectExpense
+  directIncome
+  indirectIncome
+  fixedAssets
+  currentAssets
+  loansAndLiabilities
+  accountsReceivable
+  accountsPayable
+}
+
+model Ledger {
+  id             String        @id @default(uuid())
+  ledgerName     String
+  openingBalance Decimal       @default(0.0)
+  balance Decimal              @default(0.0)
+  userId         Int
+  user           User          @relation(fields: [userId], references: [id])
+  transactions   Transaction[]
+  party          Party?        @relation(fields: [partyId], references: [id])
+  partyId        String?
+  year           Int          @default(2023)
+  month          Int          @default(0)
+  ledgerType     LedgerType
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now())
+}
+
+model JournalEntry {
+  id           String        @id @default(uuid())
+  entryDate    DateTime      @default(now())
+  description  String
+  userId       Int
+  user         User          @relation(fields: [userId], references: [id])
+  transactions Transaction[]
+}
+
+enum TransactionType {
+  credit
+  debit
+}
+
+model Transaction {
+  id              String          @id @default(uuid())
+  ledgerId        String
+  ledger          Ledger          @relation(fields: [ledgerId], references: [id])
+  journalEntryId  String
+  journalEntry    JournalEntry    @relation(fields: [journalEntryId], references: [id])
+  amount          Decimal
+  transactionType TransactionType
+  userId          Int
+  user            User            @relation(fields: [userId], references: [id])
+}
+
+enum PartyType {
+  customer
+  supplier
+}
+
+model Party {
+  id                String    @id @default(uuid())
+  partyName         String
+  type              PartyType
+  gstin             String?
+  pan               String?
+  tan               String?
+  upi               String?
+  email             String?
+  phone             String?
+  address           String?
+  bankName          String?
+  bankAccountNumber String?
+  bankIfsc          String?
+  bankBranch        String?
+  invoices          Invoice[]
+  items             Item[]
+  userId            Int
+  user              User      @relation(fields: [userId], references: [id])
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @default(now())
+  ledgers           Ledger[] 
+  @@fulltext([partyName])
+}
+
+model Category {
+  id           String @id @default(uuid())
+  categoryName String
+  userId       Int
+  user         User   @relation(fields: [userId], references: [id])
+  items        Item[]
+}
+
+enum ItemUnit {
+  pieces
+  grams
+  kilograms
+  liters
+  milliliters
+  meters
+  centimeters
+  inches
+  feet
+  squareMeters
+  squareFeet
+  cubicMeters
+  cubicFeet
+  dozen
+  pack
+  carton
+  box
+  roll
+  bundle
+  pair
+  set
+}
+
+model Item {
+  id            String        @id @default(uuid())
+  itemName      String
+  unit          ItemUnit      @default(pieces)
+  price         Decimal
+  openingStock  Decimal?
+  closingStock  Decimal?
+  purchasePrice Decimal?
+  gst           Decimal?
+  taxExempted   Boolean       @default(false)
+  description   String?
+  hsnCode       String?
+  categoryId    String?
+  category      Category?     @relation(fields: [categoryId], references: [id])
+  supplierId    String?
+  supplier      Party?        @relation(fields: [supplierId], references: [id])
+  invoiceItems  InvoiceItem[]
+  userId        Int
+  user          User          @relation(fields: [userId], references: [id])
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @default(now())
+  @@fulltext([itemName])
+}
+
+enum InvoiceType {
+  sales
+  purchase
+  sales_return
+  purchase_return
+}
+
+enum ModeOfPayment {
+  cash
+  bank
+  upi
+  credit
+}
+
+enum InvoiceStatus {
+  unpaid
+  paid
+  overdue
+}
+
+model Invoice {
+  id            String        @id @default(uuid())
+  invoiceNumber String?
+  type          InvoiceType
+  totalAmount   Float
+  totalGst      Float?
+  stateOfSupply String
+  cgst          Float?
+  sgst          Float?
+  igst          Float?
+  utgst         Float?
+  details       String?
+  extraDetails  String?
+  modeOfPayment ModeOfPayment
+  credit        Boolean
+  userId        Int
+  user          User          @relation(fields: [userId], references: [id])
+  partyId       String
+  gstNumber     String?
+  party         Party         @relation(fields: [partyId], references: [id])
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @default(now())
+  invoiceItems  InvoiceItem[]
+  accounts      Account[]
+  status        InvoiceStatus
+}
+
+model InvoiceItem {
+  id        String  @id @default(uuid())
+  itemId    String
+  quantity  Int
+  discount  Decimal @default(0.0)
+  item      Item    @relation(fields: [itemId], references: [id])
+  invoiceId String
+  invoice   Invoice @relation(fields: [invoiceId], references: [id])
+}
+
+model Service {
+  id          String   @id @default(uuid())
+  serviceName String
+  serviceType String?
+  imgUrl      String?
+  description String?
+  price       Decimal
+  gst         Decimal
+  documents   Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+}
+
+enum OrderStatus {
+  initiated
+  pending
+  success
+  failure
+  usercancelled
+  dropped
+  bounced
+}
+
+model Order {
+  id            Int      @id @default(autoincrement())
+  services      Json
+  status        OrderStatus @default(pending)
+  price         Decimal
+  gst           Decimal
+  orderTotal    Decimal
+  stateOfSupply String
+  userId        Int
+  user          User        @relation(references: [id], fields: [userId])
+}
+
+enum PaymentStatus {
+  created
+  success
+  failed
+}
+
+model Payment {
+  id                  String        @id @default(uuid())
+  razorpay_order_id   String
+  razorpay_payment_id String
+  status              PaymentStatus @default(created)
+  userId              Int
+  user                User          @relation(fields: [userId], references: [id])
+  orderId             Int
+}
+
+model Library {
+  id                  Int      @id @default(autoincrement())
+  pan                 String
+  section             String
+  sub_section         String?
+  subject             String
+  ao_order            String
+  itat_no             String
+  rsa_no              String?
+  bench               String
+  appeal_no           String?
+  appellant           String?
+  respondent          String
+  appeal_type         String
+  appeal_filed_by     String
+  order_result        String
+  tribunal_order_date String
+  assessment_year     String
+  judgment            String   @db.LongText
+  conclusion          String   @db.LongText
+  download            String
+  upload              String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @default(now())
+}
+
+model Post {
+  id        String   @id @default(uuid())
+  userId    Int
+  title     String
+  content   String   @db.LongText
+  imageUrl  String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model Account {
+  id            String    @id @default(uuid())
+  accountName   String
+  totalDebit    Decimal   @default(0.0)
+  totalCredit   Decimal   @default(0.0)
+  debitBalance  Decimal   @default(0.0)
+  creditBalance Decimal   @default(0.0)
+  date          DateTime  @default(now())
+  userId        Int
+  user          User      @relation(fields: [userId], references: [id])
+  invoices      Invoice[]
+}
+
+model Career {
+  id        Int        @id @default(autoincrement())
+  name      String
+  address   String
+  pin       String
+  email     String
+  mobile    String
+  skills    String
+  gender    UserGender
+  cv        String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now())
+}
+
+enum paymentStatus {
+  paid
+  unpaid
+  overdue
+}
+
+enum paymentMethod {
+  cash
+  creditcard
+  upi
+  netbanking
+  cheque
+}
+
+model Billrecieve {
+  id              Int           @id @default(autoincrement())
+  billNumber      String
+  amount          String
+  tax             String
+  customerName    String
+  customerAddress String
+  contact         String
+  itemQuantity    String
+  itemPrice       String
+  itemDescription String
+  paymentStatus   paymentStatus @default(unpaid)
+  paymentMethod   paymentMethod @default(cash)
+  dueDate         String
+  comment         String?
+}
+
+model Billpayable {
+  id              Int           @id @default(autoincrement())
+  supplierName    String
+  supplierAddress String
+  contact         String
+  billDate        String
+  dueDate         String
+  billAmount      String
+  billNumber      String
+  billDiscription String
+  paymentMethod   paymentMethod @default(cash)
+  transactionId   String?
+  paymentDate     String
+  paymentAmount   String
+  tax             String
+  comment         String?
+  invoiceNumber   String?
+}
+
+enum DocumentType {
+  pdf
+  image
+  other
+}
+
+model UploadedDocument {
+  id            String           @id @default(uuid())
+  userId        Int
+  user          User             @relation(fields: [userId], references: [id])
+  fileName      String
+  docs          LoanDocument[]
+  applicationId String?
+  application   LoanApplication? @relation(fields: [applicationId], references: [id])
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @default(now())
+}
+
+model LoanDocument {
+  id          String             @id @default(uuid())
+  name        String
+  shortName   String
+  mandatory   Boolean            @default(false)
+  type        DocumentType
+  description String?
+  documents   UploadedDocument[]
+  loans       Loan[]
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @default(now())
+}
+
+enum LoanType {
+  personal
+  education
+  home
+  business
+  car
+  property
+}
+
+model Loan {
+  id           String            @id @default(uuid())
+  type         LoanType
+  name         String
+  shortName    String?
+  description  String?
+  documents    LoanDocument[]
+  maxAmount    Decimal?
+  minAmount    Decimal?
+  interest     Decimal
+  applications LoanApplication[]
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @default(now())
+}
+
+enum Nationality {
+  resident
+  nri
+  foreign
+}
+
+enum LoanStatus {
+  pending
+  processing
+  review
+  accepted
+  rejected
+}
+
+model LoanApplication {
+  id               String             @id @default(uuid())
+  loanId           String
+  loan             Loan               @relation(fields: [loanId], references: [id])
+  loanAmount       Decimal
+  loanStatus       LoanStatus         @default(pending)
+  applicantName    String
+  applicantAge     Int
+  loanType         LoanType
+  applicantGender  UserGender
+  nationality      Nationality
+  description      String
+  salaried         Boolean
+  documents        UploadedDocument[]
+  bankAccountId    String
+  bankDetails      BankDetails        @relation(fields: [bankAccountId], references: [id])
+  phone            String?
+  email            String?
+  address          String?
+  permanentAddress String
+  userId           Int
+  user             User               @relation(fields: [userId], references: [id])
+  agentId          String?
+  agent            Agent?             @relation(fields: [agentId], references: [id])
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @default(now())
+}
+
+enum BankAccountType {
+  savings
+  current
+  nri
+  fcnr
+  rd
+  fd
+  salary
+}
+
+model BankDetails {
+  id                String            @id @default(uuid())
+  accountHolderName String
+  bankName          String
+  bankAccountNo     String
+  bankIfsc          String
+  bankBranch        String
+  bankAccountType   BankAccountType
+  loans             LoanApplication[]
+  userId            Int
+  user              User              @relation(fields: [userId], references: [id])
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @default(now())
+}
+
+model Insurance {
+  id            String     @id @default(uuid())
+  type          String
+  name          String
+  mobile        String
+  email         String
+  address       String
+  dob           DateTime
+  maritalStatus String
+  gender        UserGender
+  userId        Int
+  user          User       @relation(fields: [userId], references: [id])
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @default(now())
+}
+
+model Client {
+  id        String   @id @default(uuid())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  agentId   String
+  agent     Agent    @relation(fields: [agentId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model Agent {
+  id        String            @id @default(uuid())
+  clients   Client[]
+  userId    Int               @unique
+  user      User              @relation(fields: [userId], references: [id])
+  loans     LoanApplication[]
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @default(now())
+}
+
+//accountancy for ladger creation
+enum Under {
+  sales
+  Revenue
+}
+
+enum NAME {
+  sales
+  cash
+  Rent
+  Expense
+}
+
+enum CurrencyType {
+  INR
+  USD
+  EUR
+  RUB
+}
+
+model Visitor {
+  id        Int      @id @default(autoincrement())
+  count     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+enum StartupCategory {
+  registration
+  companyRegistration
+  returns
+  audits
+}
+
+model RegisterStartup {
+  id         Int             @id @default(autoincrement())
+  title      String
+  image      String
+  userId     Int
+  categories StartupCategory
+  user       User            @relation(fields: [userId], references: [id])
+}
+
+model ContactUs {
+  id          Int    @id @default(autoincrement())
+  name        String
+  email       String
+  message     String
+  phoneNumber String
+  userId      Int
+  user        User   @relation(fields: [userId], references: [id])
+}
+
+model About {
+  id          String @id @default(uuid())
+  name        String
+  position    String
+  image       String
+  description String
+}
