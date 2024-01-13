@@ -7,9 +7,9 @@
     "db:migrate:test": "sequelize db:migrate --env test",
     "db:migrate:production": "sequelize db:migrate --env production",
     "db:reset": "sequelize db:migrate:undo",
-    "start": "SET NODE_ENV=production && babel-watch server/server.js",
-    "dev": "SET NODE_ENV=development && babel-watch server/server.js",
-    "test": "SET NODE_ENV=testing && babel-watch server/server.js"
+    "start": "SET NODE_ENV=production && babel-watch app.js",
+    "dev": "SET NODE_ENV=development && babel-watch app.js",
+    "test": "SET NODE_ENV=testing && babel-watch app.js"
   },
   "dependencies": {
     "axios": "^0.25.0",
