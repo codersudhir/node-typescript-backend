@@ -86,10 +86,10 @@ app.listen(port, function(err){
             console.log("Tables Created if not exists! || ", port)
         });
     }).catch(err => {
-    console.error('Unable to connect to the database:', err);
+    console.error('Unable to connect to the database:',     err);
 });
     if (err) console.log("Error in server setup")
-    console.log("Server listening on Port", port);
+    console.log("Server listening on Port",     port);
 })
 
 
