@@ -89,7 +89,7 @@ app.listen(port, function(err){
     console.error('Unable to connect to the database:', err);
 });
     if (err) console.log("Error in server setup")
-    console.log("Server listening on Port", PORT);
+    console.log("Server listening on Port", port);
 })
 
 
