@@ -1,0 +1,204 @@
+{
+  "home":{
+    "upper": {
+      "mainHeading": "Ease of Doing Taxation, iTaxEasy.",
+      "subHeading": "Download The App For Better Tax Filing Experience",
+      "button": "Fill you itr free"
+    },
+  
+    "cards": [
+      {
+        "cardHeading": "For Individuals",
+        "sub1": "File ITR",
+        "sub2": "Easy Invest",
+        "sub3": "Verify Bank Account",
+        "sub4": "Upi Verification"
+      },
+      {
+        "cardHeading": "For Enterprices",
+        "sub1": "FEasy E-Invoice",
+        "sub2": "Easy Paybill",
+        "sub3": "Company Details",
+        "sub4": "Director Details"
+      },
+      {
+        "cardHeading": "For Tax Experts",
+        "sub1": "Easy GST",
+        "sub2": "Pan Details",
+        "sub3": "Easy TDS",
+        "sub4": "Track GST Return"
+      },
+      {
+        "cardHeading": "For SMEs",
+        "sub1": "Easy GST",
+        "sub2": "Easy One"
+      }
+    ],
+  
+    "navcards": [
+      {
+        "name": "GST",
+        "link": "/gst",
+        "cards": [
+          {
+            "heading": "GSTR-1 ",
+            "content": "Outward Supplies Are The Sales Of Goods & Services Furnished By All Registered Taxpayers. "
+          },
+          {
+            "heading": "GSTR-2A ",
+            "content": "When The Purchase Of The Registered Taxpayer Has Been Done, The Information Of Their Sales Reflect In Monthly Gstr2a. "
+          },
+          {
+            "heading": "GSTR-2B ",
+            "content": "An Auto Drafted Sale Of A Registered Tax Payer. "
+          },
+          {
+            "heading": "GSTR-3B ",
+            "content": "A Consolidated Summary Of Inward And Outward Flow Of Sale And Purchase. "
+          },
+          {
+            "heading": "GSTR-4 ",
+            "content": "A Registered Entity Opting For A Compostion, Needs To File Quarterly Return In A Year. "
+          },
+          {
+            "heading": "GSTR-7 ",
+            "content": "A Monthly Return To Be Filed By An Individual Who's TDS Has Been Deducted Under GST Or TDS Under Goods & Supply Tax. "
+          }
+        ]
+      },
+      {
+        "name": "Income Tax Links",
+        "link": "/itl",
+        "cards": [
+          {
+            "heading": "Easy ITR Status ",
+            "content": "It Is The Current Status Of ITR That Has Been Filed. the Process Is Done By The Income Tax Department, If Any Issue Comes Up In The ITR. the Income Tax Department Will Communicate Itself."
+          },
+          {
+            "heading": "Easy E-Pan ",
+            "content": "A Digitally Authenticated Pan Card Linked With Aadhar E-kyc In E-format Issued By The Income Tax Department. to Ease The Financial Transaction Of The Taxpayers. "
+          },
+          {
+            "heading": "Easy E-Verify Return ",
+            "content": "Verification In Time Is Must And Necessary. otherwise The Income Tax Return Is Treated As Invalid. your E-verification Is Quick And Instant With Us. "
+          },
+          {
+            "heading": "Easy E-Pay Tax ",
+            "content": "A Facility Provided By The Income Tax Department For The Taxpayer. by Which A Taxpayer Could Make Payment Through Various Online Banking Facilities. "
+          },
+          {
+            "heading": "Easy Know TAN Details ",
+            "content": "Tax Deduction Account Number Or Tax Collection Account Number Is A 10 Digit Alpha-numeric Number Issued By The Income Tax Department. "
+          },
+          {
+            "heading": "Easy Verify Your PAN ",
+            "content": "By providing your name you will know your pan details like Father's Name Date Of Birth "
+          },
+          {
+            "heading": "Easy Know Your AO ",
+            "content": "The Assessing Officer You Can Know Your AO by providing your Pan no here Ward, Range, City "
+          },
+          {
+            "heading": "Easy PAN Details ",
+            "content": "Online Verification Of Pan Is A Simple Process. only The Details Of Pan Card Is Required. "
+          }
+        ]
+      },
+      {
+        "name": "ITR",
+        "link": "/itr",
+        "cards": [
+          {
+            "heading": "ITR 1 ",
+            "content": "The Pre-filling And Filing Of Itr-1 Service Is Available To Registered Users On The E-filing Portal. This Service Enables Individual Taxpayers To File Itr-1 "
+          },
+          {
+            "heading": "ITR 2 ",
+            "content": "This Service Enables Individual Taxpayers To File Itr-2 Online Through The E-filing Portal. This User Manual Covers Filing Of Itr-2 Through Online Mode. "
+          },
+          {
+            "heading": "ITR 3 ",
+            "content": "The Itr-3 Is Applicable For Individual And Huf Who Have Income From Profits And Gains From Business Or Profession. The Persons Having Income ... "
+          },
+          {
+            "heading": "ITR 4 ",
+            "content": "File ITR-4 (SUGAM) Online Faqs · Income Not Exceeding ₹ 50 Lakh During The FY · Income From Business And Profession Which Is Computed On A Presumptive Basis U/s ..."
+          }
+        ]
+      },
+      {
+        "name": "Aaadhar",
+        "link": "/adhr",
+        "cards": [
+          {
+            "heading": "Easy Link Aadhaar ",
+            "content": "To Link The Pan Card With Aadhar Details Such As Aadhaar Number, Name, Mobile Number And Date Of Birth Are Required. "
+          },
+          {
+            "heading": "Easy Link Aadhaar Status ",
+            "content": "Link Your Aadhaar Card Online To Check Your Aadhaar Status. "
+          }
+        ]
+      },
+      {
+        "name": "Bank",
+        "link": "/bnk",
+        "cards": [
+          {
+            "heading": "Easy Bank Statement ",
+            "content": "A Statement Or A Summary Of Bank Transactions Of Each Month.it Shows The Income Flow Of A Bank Account. "
+          },
+          {
+            "heading": "Easy Bank IFSC ",
+            "content": "A Facility Provided By The Rbi To Bank Branches For Fund Transfer Through Rtgs, Cfms And Neft. a 11-digit Alphanumeric Code Known As The Indian Financial System Code."
+          },
+          {
+            "heading": "Easy Bank Verify ",
+            "content": "Verification Of Information For Opening A Bank Account. It Is Necessary For Safe And Secure Transaction Of Funds "
+          }
+        ]
+      }
+    ],
+    "content": {
+      "mainHeading": "Ease of Doing Taxation, iTaxEasy.",
+      "subHeading": "Download The App For Better Tax Filing Experience",
+      "image": "#url"
+    },
+    "ongoingPro": [
+      {
+        "image": "#url1",
+        "heading": "Build The Future"
+      },
+      {
+        "image": "#url2",
+        "heading": "Buy&Rent The House With Us"
+      },
+      {
+        "image": "#url3",
+        "heading": "Best Way To BUY/SELL Cars"
+      },
+      {
+        "image": "#url4",
+        "heading": "Helth Care Management Consultancy"
+      }
+    ],
+    "corporatePro": [
+      {
+        "image": "#url1",
+        "heading": "Life Insurance Corporatation of India"
+      },
+      {
+        "image": "#url2",
+        "heading": "Liability On Long-Term Capital Gains"
+      },
+      {
+        "image": "#url3",
+        "heading": "Star Health And Allied Insurance Co Ltd"
+      },
+      {
+        "image": "#url4",
+        "heading": "YES Securities(India) limited"
+      }
+    ]
+  }
+}

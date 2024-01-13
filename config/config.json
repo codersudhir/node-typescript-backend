@@ -1,0 +1,25 @@
+{
+  "development": {
+    "username": "root",
+    "password": "",
+    "database": "itaxeasy",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "school_itaxeasy",
+    "password": "3K0r%57ls",
+    "database": "node_api",
+    "host": "localhost",
+    "port":"3306",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "node",
+    "password": "1$5Tab9m1",
+    "database": "node_api",
+    "host": "localhost",
+    "port":"3306",
+    "dialect": "mysql"
+  }
+}
