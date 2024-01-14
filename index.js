@@ -12,7 +12,7 @@ const bodyParser = require('body-parser');
 const indexRouter = require('./routes/index');
 
 const app = express();
-const PORT=8080
+const PORT= process.env.PORT || 3000
 const mongoose = require('mongoose');
 const DB_URL = process.env.DB_URL
 mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true})
