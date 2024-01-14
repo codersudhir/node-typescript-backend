@@ -12,7 +12,7 @@ const bodyParser = require('body-parser');
 const indexRouter = require('./routes/index');
 
 const app = express();
-const port= process.env.PORT || 8080 
+const PORT=8080
 const mongoose = require('mongoose');
 const DB_URL = process.env.DB_URL
 mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true})
@@ -38,7 +38,7 @@ const corsOpts = {
   ],
 };
 
- app.use(cors(corsOpts));
+app.use(cors(corsOpts));
 
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -78,18 +78,18 @@ app.use(function (req, res, next) {
 
 app.use(apiErrorHandler)
 
-app.listen(port, function(err){
+app.listen(PORT, function(err){
     sequelize.authenticate()
     .then(() => {
         console.log('Connection has been established successfully.');
         sequelize.sync({alter: false,}).then(() => {
-            console.log("Tables Created if not exists! || ", port)
+            console.log("Tables Created if not exists! || ", PORT)
         });
     }).catch(err => {
-    console.error('Unable to connect to the database:',     err);
+    console.error('Unable to connect to the database:', err);
 });
     if (err) console.log("Error in server setup")
-    console.log("Server listening on Port",     port);
+    console.log("Server listening on Port", PORT);
 })
 
 
