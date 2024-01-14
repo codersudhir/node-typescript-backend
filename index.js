@@ -21,50 +21,50 @@ mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true})
 mongoose.set('useFindAndModify', false)
 mongoose.set('useCreateIndex', true)
 
-const corsOpts = {
-  origin: '*',
+// const corsOpts = {
+//   origin: '*',
 
-  methods: [
-    'GET',
-    'POST',
-  ],
+//   methods: [
+//     'GET',
+//     'POST',
+//   ],
 
-  allowedHeaders: [
-    'Content-Type',
-    'Origin',
-   'Accept', 
-   'Authorization'
+//   allowedHeaders: [
+//     'Content-Type',
+//     'Origin',
+//    'Accept', 
+//    'Authorization'
     
-  ],
-};
+//   ],
+// };
 
-// app.use(cors(corsOpts));
+// // app.use(cors(corsOpts));
 
-var allowCrossDomain = function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+// var allowCrossDomain = function(req, res, next) {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE');
+//     res.header('Access-Control-Allow-Headers', 'Content-Type');
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 
-    next();
-}
-app.use(allowCrossDomain);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(logger('dev'));
-app.use(cookieParser());
+//     next();
+// }
+// app.use(allowCrossDomain);
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'hbs');
+// app.use(express.static(path.join(__dirname, 'public')));
+// app.use(logger('dev'));
+// app.use(cookieParser());
 
-// app.use("/public",(req, res) => {
-//   res.json({status: "yup"});})
-app.use(fileupload());
-app.use(bodyParser.json());
-app.use('/', indexRouter);
+// // app.use("/public",(req, res) => {
+// //   res.json({status: "yup"});})
+// app.use(fileupload());
+// app.use(bodyParser.json());
+// app.use('/', indexRouter);
 
-// app.use(express.bodyParser({uploadDir:'./uploads'}));
-app.use(function (req, res, next) {
-    next(createError(404));
-});
+// // app.use(express.bodyParser({uploadDir:'./uploads'}));
+// app.use(function (req, res, next) {
+//     next(createError(404));
+// });
 
 // app.use(function (err, req, res, next) {
 //     // set locals, only providing error in development
