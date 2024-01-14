@@ -8,7 +8,12 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config')[env];
 const db = {};
 
-let sequelize =new Sequelize("mysql://avnadmin:AVNS_LlBufZVMNxo_84Zb_ar@mysql-1148ad12-nandanesudhir1-691a.a.aivencloud.com:14390/defaultdb?ssl-mode=REQUIRED");
+let sequelize;
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+} else {
+  sequelize = new Sequelize("mysql://avnadmin:AVNS_LlBufZVMNxo_84Zb_ar@mysql-1148ad12-nandanesudhir1-691a.a.aivencloud.com:14390/defaultdb?ssl-mode=REQUIRED");
+}
 
 fs
   .readdirSync(__dirname)
